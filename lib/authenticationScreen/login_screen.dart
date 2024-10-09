@@ -1,7 +1,9 @@
+import 'package:dating_app/authenticationScreen/registration_screen.dart';
 import 'package:dating_app/widgets/custom_text_field_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -73,7 +75,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
                 child: InkWell(
-                  onTap: (){},
+                  onTap: (){
+
+                  },
                   child: const Center(
                     child: Text("Login", style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold)),
                   ),
@@ -88,7 +92,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   const Text("Don't have an account? ", style: TextStyle(fontSize: 16, color: Colors.grey,)),
                   InkWell(
-                    onTap: (){},
+                    onTap: (){                      
+                      Get.to(RegistrationScreen());
+                    },
                     child: const Text(
                       "Register Now",
                       style: TextStyle(
