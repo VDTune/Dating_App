@@ -4,6 +4,8 @@ class Person
 {
   //personal info
   String? imageProfile;
+  String? email;
+  String? password;
   String? name;
   String? age;
   String? phoneNo;
@@ -41,6 +43,8 @@ class Person
   Person({
     //personal info
     this.imageProfile,
+    this.email,
+    this.password,
     this.name,
     this.age,
     this.phoneNo,
@@ -84,6 +88,8 @@ class Person
       //personal info
       name: dataSnapshot["name"],
       imageProfile: dataSnapshot["imageProfile"],
+      email: dataSnapshot["email"],
+      password: dataSnapshot["password"],
       age: dataSnapshot["age"],
       phoneNo: dataSnapshot["phoneNo"],
       city: dataSnapshot["city"],
@@ -122,7 +128,9 @@ class Person
   Map<String, dynamic> toJson()=>
       {
         //personal info
-        "imageFrofile": imageProfile,
+        "imageProfile": imageProfile,
+        "email": email,
+        "password": password,
         "name": name,
         "age": age,
         "phoneNo": phoneNo,
