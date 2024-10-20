@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dating_app/homeScreen/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -55,7 +56,7 @@ class AuthenticationController extends GetxController {
       String name, String age,
       String phoneNo, String city,
       String country, String profileHeading,
-      String lookingForInaPartner, String publishedDateTime,
+      String lookingForInaPartner,
 
       //Appearance
       String height, String weight, String bodyType,
@@ -88,7 +89,7 @@ class AuthenticationController extends GetxController {
         email: email,
         password: password,
         name: name,
-        age: age,
+        age: int.parse(age),
         phoneNo: phoneNo,
         city: city,
         country: country,
@@ -127,6 +128,7 @@ class AuthenticationController extends GetxController {
           .set(personInstance.toJson());
 
       Get.snackbar("Account Created", "Congratulations, your account has been created");
+      Get.to(HomeScreen());
     }
     catch(errorMsg)
     {

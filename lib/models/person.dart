@@ -7,7 +7,7 @@ class Person
   String? email;
   String? password;
   String? name;
-  String? age;
+  int? age;
   String? phoneNo;
   String? city;
   String? country;
