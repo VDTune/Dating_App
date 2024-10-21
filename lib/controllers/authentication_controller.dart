@@ -128,7 +128,7 @@ class AuthenticationController extends GetxController {
           .set(personInstance.toJson());
 
       Get.snackbar("Account Created", "Congratulations, your account has been created");
-      Get.to(HomeScreen());
+      Get.to(const HomeScreen());
     }
     catch(errorMsg)
     {

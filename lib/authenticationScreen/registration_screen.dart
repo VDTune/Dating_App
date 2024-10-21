@@ -202,7 +202,7 @@ class _RegistrationScreenState extends State<RegistrationScreen>
                   editingController: passwordTextEditingController,
                   labelText: "Password",
                   iconData: Icons.lock_outline,
-                  isObscure: false,
+                  isObscure: true,
                 ),
               ),
               const SizedBox(
@@ -637,7 +637,7 @@ class _RegistrationScreenState extends State<RegistrationScreen>
                 child: InkWell(
                   onTap: () async
                   {
-                    if(authenticationController.profileImage != null)
+                    if(authenticationController.imageFile != null)
                     {
                       if(
                       //personal info
