@@ -1,4 +1,5 @@
 import 'package:dating_app/authenticationScreen/registration_screen.dart';
+import 'package:dating_app/controllers/authentication_controller.dart';
 import 'package:dating_app/widgets/custom_text_field_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailTextEditingController = TextEditingController();
   TextEditingController passwordTextEditingController = TextEditingController();
   bool showProgressBar = false;
+  var controllerAuth = AuthenticationController.authController;
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +77,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   borderRadius: BorderRadius.all(Radius.circular(12)),
                 ),
                 child: InkWell(
-                  onTap: (){
+                  onTap: () async
+                  {
+                    if(emailTextEditingController.text.trim().isNotEmpty
+                    && passwordTextEditingController.text.trim().isNotEmpty)
+                    {
+                      setState(() {
+                        showProgressBar = true;
+                      });
 
+                      await controllerAuth.loginUser(
+                        emailTextEditingController.text.trim(),
+                        passwordTextEditingController.text.trim()
+                      );
+
+                      setState(() {
+                        showProgressBar = false;
+                      });
+                    }
+                    else
+                    {
+                      Get.snackbar("Email/Password is Missing", "Please fill all fields");
+                    }
                   },
                   child: const Center(
                     child: Text("Login", style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold)),

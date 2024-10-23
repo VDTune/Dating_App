@@ -1,3 +1,8 @@
+import 'package:dating_app/tabScreens/favorite_sent_favorite_received_screen.dart';
+import 'package:dating_app/tabScreens/like_sent_like_received_screen.dart';
+import 'package:dating_app/tabScreens/swipping_screen.dart';
+import 'package:dating_app/tabScreens/user_details_screen.dart';
+import 'package:dating_app/tabScreens/view_sent_view_received_screen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -8,19 +13,83 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+{
+  int screenIndex = 0;
+
+  List tabScreenList =
+  [
+    SwippingScreen(),
+    ViewSentViewReceivedScreen(),
+    FavoriteSentFavoriteReceivedScreen(),
+    LikeSentLikeReceivedScreen(),
+    UserDetailsScreen(),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text(
-          "Welcome",
-          style: TextStyle(
-            color: Colors.green,
-            fontSize: 20,
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (indexNumber)
+        {
+          setState(() {
+            screenIndex = indexNumber;
+          });
+        },
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.black,
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white12,
+        currentIndex: screenIndex,
+        items: const [
+
+          //SwippingScreen
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+                size: 30,
+              ),
+            label: ""
           ),
-        ),
+
+          //viewSentViewReceived icon button
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.remove_red_eye,
+                size: 30,
+              ),
+              label: ""
+          ),
+
+          //favoriteSentFavoriteReceived icon button
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.star,
+                size: 30,
+              ),
+              label: ""
+          ),
+
+          //likeSentLikeReceived icon button
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.favorite,
+                size: 30,
+              ),
+              label: ""
+          ),
+
+          //userDetailsScreen icon button
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person,
+                size: 30,
+              ),
+              label: ""
+          ),
+        ],
       ),
+      body: tabScreenList[screenIndex],
     );
   }
 }
