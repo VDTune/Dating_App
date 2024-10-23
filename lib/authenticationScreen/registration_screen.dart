@@ -275,7 +275,7 @@ class _RegistrationScreenState extends State<RegistrationScreen>
                 height: 60,
                 child: CustomTextFieldWidget(
                   editingController: profileHeadingTextEditingController,
-                  labelText: "Profilr Headinh",
+                  labelText: "Profile Heading",
                   iconData: Icons.text_fields,
                   isObscure: false,
                 ),
@@ -721,6 +721,7 @@ class _RegistrationScreenState extends State<RegistrationScreen>
 
                         setState(() {
                           showProgressBar = false;
+                          authenticationController.imageFile = null;
                         });
                       }
                       else

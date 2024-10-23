@@ -88,6 +88,7 @@ class AuthenticationController extends GetxController {
       //3. save user info to firestore database
       personModel.Person personInstance = personModel.Person(
         //personal info
+        uid: FirebaseAuth.instance.currentUser!.uid,
         imageProfile: urlOfDownloadedImage,
         email: email,
         password: password,
