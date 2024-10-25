@@ -151,7 +151,7 @@ class AuthenticationController extends GetxController {
 
       Get.snackbar("Logged-in Succesful", "You're logged-in successfully");
 
-      Get.to(HomeScreen());
+      Get.to(const HomeScreen());
     }
     catch(errorMsg)
     {
@@ -163,11 +163,11 @@ class AuthenticationController extends GetxController {
   {
     if(currentUser == null)
     {
-      Get.to(LoginScreen());
+      Get.to(const LoginScreen());
     }
     else
     {
-      Get.to(HomeScreen());
+      Get.to(const HomeScreen());
     }
   }
 
