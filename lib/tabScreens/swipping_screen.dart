@@ -1,3 +1,7 @@
+import 'dart:ffi';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dating_app/global.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/profile_controller.dart';
@@ -12,8 +16,30 @@ class SwippingScreen extends StatefulWidget
 
 class _SwippingScreenState extends State<SwippingScreen> {
   ProfileController profileController = Get.put(ProfileController());
+  String senderName = "";
 
-  
+  readCurrentUserData() async
+  {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(currentUserID)
+        .get()
+        .then((dataSnapshot)
+    {
+      setState(() {
+        senderName = dataSnapshot.data()!["name"].toString();
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    readCurrentUserData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -188,7 +214,13 @@ class _SwippingScreenState extends State<SwippingScreen> {
                       children: [
                         ///favorite button
                         GestureDetector(
-                          onTap: (){},
+                          onTap: ()
+                          {
+                            profileController.favoriteSentAndFavoriteReceived(
+                              eachProfileInfo.uid.toString(),
+                              senderName,
+                            );
+                          },
                           child: Image.asset(
                             "images/favorite.png",
                             width: 60,
@@ -206,7 +238,13 @@ class _SwippingScreenState extends State<SwippingScreen> {
 
                         ///like button
                         GestureDetector(
-                          onTap: (){},
+                          onTap: ()
+                          {
+                            profileController.likeSentAndLikeReceived(
+                              eachProfileInfo.uid.toString(),
+                              senderName,
+                            );
+                          },
                           child: Image.asset(
                             "images/like.png",
                             width: 60,
