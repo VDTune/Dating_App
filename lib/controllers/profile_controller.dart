@@ -73,4 +73,46 @@ class ProfileController extends GetxController{
 
     update();
   }
+
+  likeSentAndLikeReceived(String toUserID, String senderName) async
+  {
+    var document = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(toUserID).collection("likeReceived").doc(currentUserID)
+        .get();
+
+    //remove the like from database
+    if(document.exists)
+    {
+      //remove currentUserID from the likeReceived list of that profile person {toUserID}
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(toUserID).collection("likeReceived").doc(currentUserID)
+          .delete();
+
+      //remove profile person {toUserID} from the likeSent list of the currentUser
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(currentUserID).collection("likeSent").doc(toUserID)
+          .delete();
+    }
+    else //add-snet like in database
+        {
+      //add currentUserID to the likeReceived list of that profile person {toUserID}
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(toUserID).collection("likeReceived").doc(currentUserID)
+          .set({});
+
+      //add profile person {toUserID} to the likeSent list of the currentUser
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(currentUserID).collection("likeSent").doc(toUserID)
+          .set({});
+
+      //send notification
+    }
+
+    update();
+  }
 }
