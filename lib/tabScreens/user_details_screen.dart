@@ -145,10 +145,10 @@ class _UserDetailsScreenState extends State<UserDetailsScreen> {
           padding: const EdgeInsets.all(30),
           child: Column(
             children: [
-              ///image sliderw
+              ///image slider
               SizedBox(height: MediaQuery.of(context).size.height * 0.4, width: MediaQuery.of(context).size.width,
               child: Padding(
-                padding: EdgeInsets.all(2),
+                padding: const EdgeInsets.all(2),
                 child: Carousel(
                   indicatorBarColor: Colors.black.withOpacity(0.3),
                   autoScrollDuration: const Duration(seconds: 2),

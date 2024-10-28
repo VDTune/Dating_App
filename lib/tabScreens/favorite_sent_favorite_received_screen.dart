@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'global';
 
 class FavoriteSentFavoriteReceivedScreen extends StatefulWidget {
   const FavoriteSentFavoriteReceivedScreen({super.key});
@@ -8,6 +11,10 @@ class FavoriteSentFavoriteReceivedScreen extends StatefulWidget {
 }
 
 class _FavoriteSentFavoriteReceivedScreenState extends State<FavoriteSentFavoriteReceivedScreen> {
+
+  getFavoriteListKeys() async {
+  }
+
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
