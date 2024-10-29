@@ -115,4 +115,36 @@ class ProfileController extends GetxController{
 
     update();
   }
+
+  viewSentAndViewReceived(String toUserID, String senderName) async
+  {
+    var document = await FirebaseFirestore.instance
+        .collection("users")
+        .doc(toUserID).collection("viewReceived").doc(currentUserID)
+        .get();
+
+
+    if(document.exists)
+    {
+      print('Already in view list');
+    }
+    else //add new view in database
+        {
+      //add currentUserID to the likeReceived list of that profile person {toUserID}
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(toUserID).collection("viewReceived").doc(currentUserID)
+          .set({});
+
+      //add profile person {toUserID} to the viewSent list of the currentUser
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(currentUserID).collection("viewSent").doc(toUserID)
+          .set({});
+
+      //send notification
+    }
+
+    update();
+  }
 }
