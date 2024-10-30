@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class PushNotificationSystem
 {
@@ -56,6 +58,40 @@ class PushNotificationSystem
 
   openAppAndShowNotificationData(receivedID, senderID, context) async
   {
-    
+    await FirebaseFirestore.instance
+        .collection("users")
+        .doc(senderID)
+        .get()
+        .then((snapshot)
+    {
+      String profileImage = snapshot.data()!["imageProfile"].toString();
+      String name = snapshot.data()!["name"].toString();
+      String age = snapshot.data()!["age"].toString();
+      String city = snapshot.data()!["city"].toString();
+      String country = snapshot.data()!["country"].toString();
+      String profession = snapshot.data()!["profession"].toString();
+
+      showDialog(
+          context: context,
+          builder: (context)
+          {
+            return NotificationDialogBox(
+              senderID,
+              profileImage,
+              name,
+              age,
+              city,
+              country,
+              profession,
+              context,
+            );
+          }
+        );
+    });
+  }
+
+  NotificationDialogBox(senderID, profileImage, name, age, city, country, profession, context)
+  {
+
   }
 }
