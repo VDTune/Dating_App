@@ -742,7 +742,7 @@ class _RegistrationScreenState extends State<RegistrationScreen>
 
               const SizedBox(height: 16),
 
-              //already have an account login here buttong
+              //already have an account login here button
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
