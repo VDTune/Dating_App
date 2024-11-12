@@ -3,6 +3,7 @@ import 'package:dating_app/controllers/authentication_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 void main() async
 {
@@ -10,6 +11,13 @@ void main() async
 
   await Firebase.initializeApp().then((value){
     Get.put(AuthenticationController());
+  });
+
+  await Permission.notification.isDenied.then((value)
+  {
+    if(value){
+      Permission.notification.request();
+    }
   });
 
   runApp(const MyApp());

@@ -56,7 +56,7 @@ class AuthenticationController extends GetxController {
   createNewUserAccount(
       //personal info
       File imageProfile, String email, String password,
-      String name, String age,
+      String name, String age, String gender,
       String phoneNo, String city,
       String country, String profileHeading,
       String lookingForInaPartner,
@@ -94,6 +94,7 @@ class AuthenticationController extends GetxController {
         password: password,
         name: name,
         age: int.parse(age),
+        gender: gender.toLowerCase(),
         phoneNo: phoneNo,
         city: city,
         country: country,

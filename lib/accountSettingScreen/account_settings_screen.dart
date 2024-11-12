@@ -26,8 +26,9 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen>
   double val = 0;
 
   //personal info
+  TextEditingController genderTextEditingController = TextEditingController();
   TextEditingController nameTextEditingController = TextEditingController();
-  TextEditingController ageTextEditingController = TextEditingController();
+  TextEditingController ageTextEditingController = TextEditingController();  
   TextEditingController phoneTextEditingController = TextEditingController();
   TextEditingController cityTextEditingController = TextEditingController();
   TextEditingController countryTextEditingController = TextEditingController();
@@ -62,6 +63,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen>
   //personal info
   String name = '';
   String age = '';
+  String gender = '';
   String phoneNo = '';
   String city = '';
   String country = '';
@@ -146,6 +148,8 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen>
           nameTextEditingController.text = name;
           age = snapshot.data()!['age'].toString();
           ageTextEditingController.text = age;
+          gender = snapshot.data()!['gender'].toString();;
+          genderTextEditingController.text = gender;
           phoneNo = snapshot.data()!['phoneNo'];
           phoneTextEditingController.text = phoneNo;
           city = snapshot.data()!['city'];
@@ -208,7 +212,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen>
 
   updateUserDataToFirestoreDatabase(
       //personal info
-      String name, String age,
+      String name, String age, String gender,
       String phoneNo, String city,
       String country, String profileHeading,
       String lookingForInaPartner,
@@ -259,6 +263,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen>
           //personal info
           'name': name,
           'age': int.parse(age),
+          'gender': gender.toLowerCase(),
           'phoneNo': phoneNo,
           'city': city,
           'country': country,
@@ -401,6 +406,21 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen>
                   editingController: ageTextEditingController,
                   labelText: "Age",
                   iconData: Icons.numbers,
+                  isObscure: false,
+                ),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+
+              //gender
+              SizedBox(
+                width: MediaQuery.of(context).size.width - 60,
+                height: 60,
+                child: CustomTextFieldWidget(
+                  editingController: genderTextEditingController,
+                  labelText: "Gender",
+                  iconData: Icons.person_pin,
                   isObscure: false,
                 ),
               ),
@@ -825,6 +845,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen>
                     //personal info
                     nameTextEditingController.text.trim().isNotEmpty
                         && ageTextEditingController.text.trim().isNotEmpty
+                        && genderTextEditingController.text.trim().isNotEmpty
                         && phoneTextEditingController.text.trim().isNotEmpty
                         && cityTextEditingController.text.trim().isNotEmpty
                         && countryTextEditingController.text.trim().isNotEmpty
@@ -861,6 +882,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen>
                         //personal info
                           nameTextEditingController.text.trim(),
                           ageTextEditingController.text.trim(),
+                          genderTextEditingController.text.trim(),
                           phoneTextEditingController.text.trim(),
                           cityTextEditingController.text.trim(),
                           countryTextEditingController.text.trim(),

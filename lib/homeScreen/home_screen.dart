@@ -1,3 +1,4 @@
+import 'package:dating_app/pushNotificationSystem/push_notification_system.dart';
 import 'package:dating_app/tabScreens/favorite_sent_favorite_received_screen.dart';
 import 'package:dating_app/tabScreens/like_sent_like_received_screen.dart';
 import 'package:dating_app/tabScreens/swipping_screen.dart';
@@ -26,6 +27,16 @@ class _HomeScreenState extends State<HomeScreen>
     LikeSentLikeReceivedScreen(),
     UserDetailsScreen(userID: FirebaseAuth.instance.currentUser!.uid,),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    PushNotificationSystem notificationSystem = PushNotificationSystem();
+    notificationSystem.generateDeviceRegistrationToken();
+    notificationSystem.whenNotificationReceived(context);
+  }
 
   @override
   Widget build(BuildContext context) {

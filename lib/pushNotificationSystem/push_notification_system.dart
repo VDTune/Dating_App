@@ -1,7 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dating_app/global.dart';
+import 'package:dating_app/tabScreens/user_details_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PushNotificationSystem
 {
@@ -92,6 +96,127 @@ class PushNotificationSystem
 
   NotificationDialogBox(senderID, profileImage, name, age, city, country, profession, context)
   {
+    return Dialog(
+      child: GridTile(
+        child: Padding(
+          padding: const EdgeInsets.all(2.0),
+          child: SizedBox(
+            height: 100,
+            child: Card(
+              color: Colors.blue.shade200,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(profileImage),
+                    fit: BoxFit.cover,
+                  )
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Column
+                    (
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                          
+                          //name = age
+                          Text(
+                            name + " o " + age.toString(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
 
+                          const SizedBox(
+                            height: 8,
+                          ),
+
+                          //icon city country location
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.location_on_outlined,
+                                color: Colors.white,
+                                size: 16,
+                              ),
+
+                              const SizedBox(
+                                width: 2,
+                              ),
+
+                              Expanded(
+                                child: Text(
+                                  city + ", " + country.toString(),
+                                  maxLines: 4,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                                ),
+                            ],
+                          ),
+
+                          const Spacer(),
+
+                          // 2 button
+                          Row(
+                            children: [
+
+                              Center(
+                                child: ElevatedButton(
+                                  onPressed: (){
+                                    Get.back();
+
+                                    Get.to(UserDetailsScreen(userID: senderID,));
+
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.green,
+                                  ),
+                                  child: const Text(
+                                    "View Profile",
+                                  ),
+                                ),
+                              ),
+
+                              Center(
+                                child: ElevatedButton(
+                                  onPressed: (){
+                                    Get.back();
+                                  } ,
+                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+                                  child: const Text(
+                                    "Close"
+                                  ),
+                                ),
+                              ),
+                            
+                            ],
+                          ),
+                      ]
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future generateDeviceRegistrationToken() async
+  {
+    String? deviceToken = await messaging.getToken();
+
+    await FirebaseFirestore.instance
+      .collection("users")
+      .doc(currentUserID)
+      .update({
+        "userDeviceToken": deviceToken,
+      });
   }
 }

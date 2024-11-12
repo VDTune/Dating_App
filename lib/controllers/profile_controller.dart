@@ -9,27 +9,55 @@ class ProfileController extends GetxController{
   final Rx<List<Person>> usersProfileList = Rx<List<Person>>([]);
   List<Person> get allUsersProfileList => usersProfileList.value;
 
+  getResults(){
+    onInit();
+  }
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
 
-    usersProfileList.bindStream(
-      FirebaseFirestore.instance
-          .collection("users")
-          .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
-          .snapshots()
-          .map((QuerySnapshot queryDataSnapshot)
-      {
-        List<Person> profileList = [];
-
-        for(var eachProfile in queryDataSnapshot.docs)
+    if(chosenGender == null || chosenAge == null || chosenCountry == null){
+      usersProfileList.bindStream(
+        FirebaseFirestore.instance
+            .collection("users")
+            .where("uid", isNotEqualTo: FirebaseAuth.instance.currentUser!.uid)
+            .snapshots()
+            .map((QuerySnapshot queryDataSnapshot)
         {
-          profileList.add(Person.fromDataSnapshot(eachProfile));
-        }
-        return profileList;
-      })
-    );
+          List<Person> profileList = [];
+
+          for(var eachProfile in queryDataSnapshot.docs)
+          {
+            profileList.add(Person.fromDataSnapshot(eachProfile));
+          }
+          return profileList;
+        })
+      );
+    }
+    else {
+      usersProfileList.bindStream(
+        FirebaseFirestore.instance
+            .collection("users")
+            .where("gender", isEqualTo: chosenGender.toString().toLowerCase())
+            .where("country", isEqualTo: chosenCountry.toString())
+            .where("age", isGreaterThanOrEqualTo: int.parse(chosenAge.toString()))
+            .snapshots()
+            .map((QuerySnapshot queryDataSnapshot)
+        {
+          List<Person> profileList = [];
+
+          for(var eachProfile in queryDataSnapshot.docs)
+          {
+            profileList.add(Person.fromDataSnapshot(eachProfile));
+          }
+          print(profileList);
+          return profileList;
+        })
+      );
+    }
+
   }
 
   favoriteSentAndFavoriteReceived(String toUserID, String senderName) async
@@ -69,6 +97,7 @@ class ProfileController extends GetxController{
           .set({});
 
       //send notification
+      sendNotificationToUser(toUserID, "Favorite", senderName);
     }
 
     update();
@@ -111,6 +140,8 @@ class ProfileController extends GetxController{
           .set({});
 
       //send notification
+      sendNotificationToUser(toUserID, "Like", senderName);
+
     }
 
     update();
@@ -143,8 +174,37 @@ class ProfileController extends GetxController{
           .set({});
 
       //send notification
+      sendNotificationToUser(toUserID, "View", senderName);
+
     }
 
     update();
+  }
+
+  sendNotificationToUser (recieiverID, featureType, senderName) async {
+    String userDeviceToken = "";
+
+    await FirebaseFirestore.instance
+    .collection("users")
+    .doc(recieiverID).get().then((snapshot){
+      if(snapshot.data()!["userDeviceToken"] != null){
+        userDeviceToken = snapshot.data()!["userDeviceToken"].toString();
+      }
+    });
+
+    notificationFormat(
+      userDeviceToken,
+      recieiverID,
+      featureType,
+      senderName,
+    );
+  }
+
+  notificationFormat(userDeviceToken,recieiverID,featureType,senderName,)
+  {
+    Map<String, String> headerNotification = 
+    {
+      "Content-Type": "application/json",
+    };
   }
 }
