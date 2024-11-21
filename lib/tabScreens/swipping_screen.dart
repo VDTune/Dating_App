@@ -20,38 +20,38 @@ class _SwippingScreenState extends State<SwippingScreen> {
   ProfileController profileController = Get.put(ProfileController());
   String senderName = "";
 
-  // startChattingInApp(String receiverPhonenumber)async{ 
-  //   var androidUrl = "whatsapp://send?phone=$receiverPhonenumber&text=Hi, I found your profile on dating app.";
-  //   var iosUrl = "https://wa.me$receiverPhonenumber?text=${Uri.parse('Hi, I found your profilr on dating app.')}";
+  startChattingInApp(String receiverPhonenumber)async{ 
+    var androidUrl = "whatsapp://send?phone=$receiverPhonenumber&text=Hi, I found your profile on dating app.";
+    var iosUrl = "https://wa.me$receiverPhonenumber?text=${Uri.parse('Hi, I found your profilr on dating app.')}";
 
-  //   try{
-  //     if(Platform.isIOS){
-  //       await launchUrl((Uri.parse(iosUrl)));
-  //     }
-  //     else {
-  //       await launchUrl((Uri.parse(androidUrl)));
-  //     }
-  //   }
-  //   on Exception{
-  //     showDialog(
-  //       context: context, 
-  //       builder: (BuildContext context){
-  //         return AlertDialog(
-  //           title: const Text("WhatsApp not found."),
-  //           content: const Text("WhatsApp is not installed."),
-  //           actions:[
-  //             TextButton(
-  //               onPressed: (){
-  //                 Get.back();
-  //               }, 
-  //               child: const Text("Ok"),
-  //             ),
-  //           ]
-  //         );
-  //       }
-  //     );
-  //   }
-  // }
+    try{
+      if(Platform.isIOS){
+        await launchUrl((Uri.parse(iosUrl)));
+      }
+      else {
+        await launchUrl((Uri.parse(androidUrl)));
+      }
+    }
+    on Exception{
+      showDialog(
+        context: context, 
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: const Text("WhatsApp not found."),
+            content: const Text("WhatsApp is not installed."),
+            actions:[
+              TextButton(
+                onPressed: (){
+                  Get.back();
+                }, 
+                child: const Text("Ok"),
+              ),
+            ]
+          );
+        }
+      );
+    }
+  }
 
   applyFilter(){
     showDialog(
@@ -412,7 +412,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                         ///chat button
                         GestureDetector(
                           onTap: (){
-                            // startChattingInApp(eachProfileInfo.phoneNo.toString());
+                            startChattingInApp(eachProfileInfo.phoneNo.toString());
                           },
                           child: Image.asset(
                             "images/chat.png",
