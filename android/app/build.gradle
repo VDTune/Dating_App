@@ -77,6 +77,9 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.fragment:fragment-ktx:1.7.1'
+    implementation 'com.google.firebase:firebase-appcheck:17.0.0'
+    implementation 'com.google.firebase:firebase-appcheck-playintegrity:17.0.0'
+    implementation 'com.google.firebase:firebase-appcheck-debug:17.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
