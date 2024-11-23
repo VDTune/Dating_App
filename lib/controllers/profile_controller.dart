@@ -1,11 +1,13 @@
+import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dating_app/global.dart';
 import 'package:dating_app/models/person.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileController extends GetxController{
+
   final Rx<List<Person>> usersProfileList = Rx<List<Person>>([]);
   List<Person> get allUsersProfileList => usersProfileList.value;
 
@@ -206,5 +208,33 @@ class ProfileController extends GetxController{
     {
       "Content-Type": "application/json",
     };
+
+    Map bodyNotification =
+        {
+          "body" : "You have received a new $featureType from $senderName. Click to see.",
+          "title": "New $featureType",
+        };
+
+    Map dataMap = {
+      "click_action": "FLUTTER_NOTIFICATION_CLICK",
+      "id": "1",
+      "status": "done",
+      "userID": recieiverID,
+      "senderID": currentUserID,
+    };
+
+    Map notificationOfficialFormat =
+        {
+          "notification": bodyNotification,
+          "data": dataMap,
+          "priority": "high",
+          "to": userDeviceToken,
+        };
+    
+    http.post(
+      Uri.parse("https://fcm.googleapis.cpm/fcm/send"),
+      headers: headerNotification,
+      body: jsonEncode(notificationOfficialFormat),
+    );
   }
 }

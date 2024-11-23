@@ -5,7 +5,6 @@ import 'package:dating_app/tabScreens/user_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
-// import 'package:url_launcher/url_launcher.dart';
 import '../controllers/profile_controller.dart';
 
 class SwippingScreen extends StatefulWidget
@@ -72,7 +71,7 @@ class _SwippingScreenState extends State<SwippingScreen> {
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: DropdownButton<String>(
-                      hint: const Text("Select gender."),
+                      hint: const Text("Select gender"),
                       value: chosenGender,
                       underline: Container(),
                       items: [
@@ -99,11 +98,11 @@ class _SwippingScreenState extends State<SwippingScreen> {
                   ),
                   const SizedBox(height: 20,),
 
-                  const Text("Who live in : "),
+                  const Text("Who live in: "),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: DropdownButton<String>(
-                      hint: const Text("Select country."),
+                      hint: const Text("Select country"),
                       value: chosenCountry,
                       underline: Container(),
                       items: [

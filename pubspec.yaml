@@ -46,7 +46,8 @@ dependencies:
   googleapis:
   googleapis_auth:
   permission_handler:
-  url_launcher: 
+  url_launcher:
+  http:
   
 dev_dependencies:
   flutter_test:

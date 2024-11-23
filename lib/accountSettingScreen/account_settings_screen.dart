@@ -428,7 +428,7 @@ class _AccountSettingsScreenState extends State<AccountSettingsScreen>
                 height: 24,
               ),
 
-              // phone
+              // phoneNo
               SizedBox(
                 width: MediaQuery.of(context).size.width - 60,
                 height: 60,
